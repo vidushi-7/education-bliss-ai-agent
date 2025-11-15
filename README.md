@@ -3,7 +3,7 @@
 ### Education Bliss AI Agent: 
 A Personalized, Multi-Agent Learning System
 
-<img width="1024" height="1024" alt="Gemini_Generated_Image_tpldf0tpldf0tpld" src="https://github.com/user-attachments/assets/d6309f6a-b55c-4552-8207-3917c3edf0a4" />
+<img width="1024" height="1024" alt="Gemini_Generated_Image_3gb0ra3gb0ra3gb0" src="https://github.com/user-attachments/assets/311eb33c-2fab-4076-95b9-94aee57bdec1" />
 
 
 ***
@@ -35,6 +35,8 @@ This architecture guarantees high-quality responses, reliable tool use, and supe
 ## 2. Architecture and Implementation
 
 ### System Architecture: Education Bliss AI Agent
+
+<img width="1024" height="1024" alt="Gemini_Generated_Image_tpldf0tpldf0tpld" src="https://github.com/user-attachments/assets/d6309f6a-b55c-4552-8207-3917c3edf0a4" />
 
 The system operates on a hierarchical structure orchestrated by a Supervisor, enabling seamless delegation of tasks and persistent memory management.
 
@@ -87,10 +89,10 @@ Our project journey followed a strict engineering discipline to ensure robustnes
 5.  **Observability Overlay (Across All Agents):** A semi-transparent overlay or border encompassing all agents and the Supervisor, labeled **ADK Observability Layer (MockTracer)**.
     * *Function:* Tracking Spans, Attributes, Events.
 
-<img width="1024" height="1024" alt="Gemini_Generated_Image_tpldf0tpldf0tpld" src="https://github.com/user-attachments/assets/0ef0d2c5-eb41-410c-878f-1fb1b670be3b" />
-
 
 ## 4. Technical Implementation (Architecture, Code)
+
+<img width="1024" height="1024" alt="Gemini_Generated_Image_tpldf0tpldf0tpld" src="https://github.com/user-attachments/assets/0ef0d2c5-eb41-410c-878f-1fb1b670be3b" />
 
 This solution demonstrates the use of four (4) key ADK concepts:
 
