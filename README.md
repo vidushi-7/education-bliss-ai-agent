@@ -216,18 +216,42 @@ The system is designed explicitly for use with the Gemini 1.5 Flash model (as sp
 💎 QuizAgent: Using Gemini's generation capabilities to create diverse and fair assessment questions and correct answers.
 
 
-## 6. Achivements and Future Scope of "Education Bliss AI Agent"
+## 6. Future Scope of "Education Bliss AI Agent"
 
 The Education Bliss AI Agent represents a significant leap forward in digital education. By leveraging a specialized, multi-agent architecture, the system directly solves the critical personalization gap that plagues traditional online learning platforms. Its ability to dynamically create curricula, provide grounded tutoring, and deliver adaptive assessments creates a learning experience that is truly responsive to the individual. The combination of agent specialization, advanced tool use, and persistent memory management delivers a powerful, modular, and intelligent solution poised to redefine learner engagement and effectiveness.
 The next logical step for this project is to advance from its current, fully-verified mock implementation to a live pilot program. We recommend deploying the system with live Agent Development Kit (ADK) components and full integration with Vertex AI. This will enable real-world testing and validation, gathering crucial data on user interaction and learning outcomes, and moving us closer to delivering a new standard in personalized education.
 
+## 7. Achievements of "Education Bliss AI Agent"
 
-## 6. Youtube Video Submission Link:  
+Here's a summary of the implemented ADK-based multi-agent education system, including a description of how each agent contributes to the learning process and how observability and testing are incorporated.
+
+🔑 ADK Configuration Setup: The education_agents_adk.py file was initialized with placeholder PROJECT_ID and LOCATION values, preparing the environment for a GCP Vertex AI connection. Users are required to manually update these placeholders with their specific GCP project ID and region for the system to function with real ADK components.
+
+🔑 CurriculumAgent Implementation: The CurriculumAgent was successfully implemented using mock ADK components. It is responsible for interpreting a user's learning goal and generating a structured learning plan. An initial ImportError was resolved by properly setting up the mock adk module structure within the education_agents_adk.py file.
+
+🔑 TutorAgent Functionality: The TutorAgent was implemented to teach concepts and answer follow-up questions. It integrates a GoogleSearchTool (mocked) to retrieve information for answering questions, demonstrating tool usage within an agent's workflow.
+
+🔑 QuizAgent Capabilities: The QuizAgent was designed to generate multiple-choice quizzes on specified topics and grade student submissions. It leverages a GradeQuizTool (mocked) to simulate the grading process.
+
+🔑 GradeQuizTool Definition: A MockGradeQuizTool was defined, inheriting from MockTool (simulating adk.tools.Tool). This tool includes a run method that simulates quiz grading, returning a fixed score of 85, along with feedback.
+
+🔑 EducationSupervisor Orchestration: The EducationSupervisor was implemented as the central orchestrator of the multi-agent system. It initializes and manages CurriculumAgent, TutorAgent, and QuizAgent, a MockInMemorySessionService for session state, and MockADKInMemoryMemory for long-term knowledge storage.
+
+🔑 Observability Integration: A MockTracer instance is shared across all agents and the supervisor, enabling simulated tracing of agent activities, tool usage, and key events (e.g., "plan_generated", "concept_taught", "quiz_graded"), which is crucial for monitoring and debugging the system.
+
+🔑 End-to-End Simulation: The supervise_education method within the EducationSupervisor demonstrates a complete educational flow, from generating a learning plan, teaching a concept, answering questions using a search tool, to generating and grading a quiz, all while updating session data and long-term memory.
+
+🔑 Robust Foundation with Mock Components: The development of the multi-agent education system with mocked ADK components (agents, tools, supervisor, session, and memory services) provides a robust and testable foundation, allowing for independent development and verification of each component's logic and interaction patterns.
+Transition to Real ADK and GCP: The next critical step is to replace the mock ADK components with actual ADK implementations, connecting the system to real Google Cloud services like Vertex AI and the Gemini API using the pre-configured PROJECT_ID and LOCATION. This will enable the system to leverage live LLM capabilities and potentially other real-world tools.
+
+
+
+## 8. Youtube Video Submission Link:  
 
 ##  https://youtu.be/Zv74NtH8Q2Q
 
 
-## 7. Agent Deployment: "Education Bliss AI Agent"
+## 9. Agent Deployment: "Education Bliss AI Agent"
 
 ✅ Central Component: EducationSupervisor (The Orchestrator)
 
@@ -278,13 +302,13 @@ Component: Span tracking, attributes, and events log every interaction across al
 
 
 
-## 8. Bonus points Section (Tooling, Model Use, Deployment, Video) for "Education Bliss AI Agent"
+## 10. Bonus points Section (Tooling, Model Use, Deployment, Video) for "Education Bliss AI Agent"
 
 Youtube video link to demonstrate this is:   
 ##  https://youtu.be/Zv74NtH8Q2Q
 
 
-## 9. Citations
+## 11. Citations
 
 @misc{agents-intensive-capstone-project,
     author = {Addison Howard and Brenda Flynn and Eric Schmidt and Kanchana Patlolla and Kinjal Parekh and María Cruz and Polong Lin and Ray Harvey},
@@ -294,5 +318,5 @@ Youtube video link to demonstrate this is:
     note = {Kaggle}
 }
 
-## 10. Author and Core Contributor:  Vidushi Chouksey
-LinkedIn:  https://www.linkedin.com/in/vidushi2222/
+## 12. Author and Core Contributor:  
+Vidushi Chouksey:  https://www.linkedin.com/in/vidushi2222/
