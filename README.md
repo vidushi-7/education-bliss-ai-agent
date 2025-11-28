@@ -36,7 +36,8 @@ This architecture guarantees high-quality responses, reliable tool use, and supe
 
 ### System Architecture: Education Bliss AI Agent
 
-<img width="1024" height="1024" alt="Gemini_Generated_Image_tpldf0tpldf0tpld" src="https://github.com/user-attachments/assets/d6309f6a-b55c-4552-8207-3917c3edf0a4" />
+
+<img width="2816" height="1536" alt="Gemini_Generated_Image_h2grauh2grauh2gr" src="https://github.com/user-attachments/assets/f85c930b-39c2-46d5-8a5f-28057b227b61" />
 
 The system operates on a hierarchical structure orchestrated by a Supervisor, enabling seamless delegation of tasks and persistent memory management.
 
@@ -47,6 +48,8 @@ The system operates on a hierarchical structure orchestrated by a Supervisor, en
 | **TutorAgent** | LlmAgent | **Teaches** concepts, answers questions, and grounds information using external sources. | **Tool Use** (`GoogleSearchTool`) |
 | **QuizAgent** | LlmAgent | **Assesses** student knowledge by generating quizzes and grading submissions. | **Tool Use** (`GradeQuizTool`) |
 | **ADK Memory Services** | ADK Memory | `InMemorySessionService` tracks current lesson status. `ADKInMemoryMemory` stores permanent records (e.g., final grades, completed plans). | **Session State & Long-Term Memory** |
+
+***
 
 ### Project Journey and Technical Implementation
 
@@ -89,7 +92,7 @@ Our project journey followed a strict engineering discipline to ensure robustnes
 5.  **Observability Overlay (Across All Agents):** A semi-transparent overlay or border encompassing all agents and the Supervisor, labeled **ADK Observability Layer (MockTracer)**.
     * *Function:* Tracking Spans, Attributes, Events.
 
-
+***
 ## 4. Technical Implementation (Architecture, Code)
 
 <img width="1024" height="1024" alt="Gemini_Generated_Image_tpldf0tpldf0tpld" src="https://github.com/user-attachments/assets/0ef0d2c5-eb41-410c-878f-1fb1b670be3b" />
@@ -101,6 +104,7 @@ Four specialized agents (CurriculumAgent, TutorAgent, QuizAgent, and EducationSu
 
 ## Tool Use (Tools): 
 The system implements the GoogleSearchTool (for real-time, grounded teaching) and the custom GradeQuizTool (for structured, consistent assessment logic).
+
 
 ## Session State and Long-Term Memory (ADK Session Services & Memory): 
 The EducationSupervisor manages short-term state via InMemorySessionService and long-term knowledge (learning plans, final grades) via ADKInMemoryMemory, enabling personalized, multi-session learning.
@@ -202,11 +206,11 @@ Instantiate and run the supervisor to simulate an education flow.
 
 ##  Run Tests: 
 Execute the comprehensive tests to verify all agent logic.
-Below is the attached scrrenshot of all the 8 Tests Passed successfully.
+Below is the attached screenshot of all the 8 Tests Passed successfully.
 
 <img width="1439" height="546" alt="Screen Shot 2025-11-28 at 6 07 56 PM" src="https://github.com/user-attachments/assets/ea791563-c48e-490a-ae46-593a79d471c1" />
 
-
+***
 
 ## 5. Effective Use of Gemini:
 
@@ -218,11 +222,13 @@ The system is designed explicitly for use with the Gemini 1.5 Flash model (as sp
 
 💎 QuizAgent: Using Gemini's generation capabilities to create diverse and fair assessment questions and correct answers.
 
+***
 
 ## 6. Future Scope of "Education Bliss AI Agent"
 
 The Education Bliss AI Agent represents a significant leap forward in digital education. By leveraging a specialized, multi-agent architecture, the system directly solves the critical personalization gap that plagues traditional online learning platforms. Its ability to dynamically create curricula, provide grounded tutoring, and deliver adaptive assessments creates a learning experience that is truly responsive to the individual. The combination of agent specialization, advanced tool use, and persistent memory management delivers a powerful, modular, and intelligent solution poised to redefine learner engagement and effectiveness.
 The next logical step for this project is to advance from its current, fully-verified mock implementation to a live pilot program. We recommend deploying the system with live Agent Development Kit (ADK) components and full integration with Vertex AI. This will enable real-world testing and validation, gathering crucial data on user interaction and learning outcomes, and moving us closer to delivering a new standard in personalized education.
+***
 
 ## 7. Achievements of "Education Bliss AI Agent"
 
@@ -246,14 +252,13 @@ Here's a summary of the implemented ADK-based multi-agent education system, incl
 
 🔑 Robust Foundation with Mock Components: The development of the multi-agent education system with mocked ADK components (agents, tools, supervisor, session, and memory services) provides a robust and testable foundation, allowing for independent development and verification of each component's logic and interaction patterns.
 Transition to Real ADK and GCP: The next critical step is to replace the mock ADK components with actual ADK implementations, connecting the system to real Google Cloud services like Vertex AI and the Gemini API using the pre-configured PROJECT_ID and LOCATION. This will enable the system to leverage live LLM capabilities and potentially other real-world tools.
-
-
+***
 
 ## 8. Youtube Video Submission Link:  
 
 ##  https://youtu.be/Zv74NtH8Q2Q
 
-
+***
 ## 9. Agent Deployment: "Education Bliss AI Agent"
 
 ✅ Central Component: EducationSupervisor (The Orchestrator)
@@ -311,13 +316,14 @@ The project involved an initial mock implementation, followed by a transition to
 Readiness for Pilot: The system is now ready for a live pilot program, indicating a stable and tested foundation for further integration and real-world application.
 Real ADK Integration: The next critical step involves integrating the developed system with a real ADK to validate its performance and functionality in a live environment.
 Dynamic Learning Plan Implementation: Explore the implementation of dynamic learning plans, leveraging the multi-agent system's capabilities to adapt and personalize educational content.
+***
 
 ## 10. Bonus points Section (Tooling, Model Use, Deployment, Video) for "Education Bliss AI Agent"
 
 Youtube video link to demonstrate this is:   
 ## **https://youtu.be/Zv74NtH8Q2Q**
 
-
+***
 ## 11. Summary:
 
 The implemented ADK-based multi-agent education system comprises an EducationSupervisor orchestrating three specialized agents: CurriculumAgent, TutorAgent, and QuizAgent.
@@ -332,6 +338,7 @@ The implemented ADK-based multi-agent education system comprises an EducationSup
 
 **Key concepts implemented include a multi-agent system, LLM-powered agents, custom and built-in tools, session and long-term memory, and observability. Observability is integrated via a MockTracer (simulating OpenTelemetry) in each agent and tool to log execution flow and interactions. Comprehensive pytest unit and integration tests, including an end-to-end test for the EducationSupervisor, unit tests for individual agents, supervisor routing tests, and a dedicated observability test using caplog, ensure the system's correctness and tracing functionality.**
 
+***
 
 ## 12. Citations
 
@@ -342,6 +349,7 @@ The implemented ADK-based multi-agent education system comprises an EducationSup
     howpublished = {\url{https://kaggle.com/competitions/agents-intensive-capstone-project}},
     note = {Kaggle}
 }
-
+***
 ## 13. Author and Core Contributor:  
 Vidushi Chouksey:  **https://www.linkedin.com/in/vidushi2222/**
+***
