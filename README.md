@@ -202,9 +202,10 @@ Instantiate and run the supervisor to simulate an education flow.
 
 ##  Run Tests: 
 Execute the comprehensive tests to verify all agent logic.
+Below is the attached scrrenshot of all the 8 Tests Passed successfully.
 
+<img width="1439" height="546" alt="Screen Shot 2025-11-28 at 6 07 56 PM" src="https://github.com/user-attachments/assets/ea791563-c48e-490a-ae46-593a79d471c1" />
 
-<img width="1121" height="351" alt="Screen Shot 2025-11-15 at 10 59 16 PM" src="https://github.com/user-attachments/assets/1c7ed8fc-c63e-4cac-894b-e7f89cd73440" />
 
 
 ## 5. Effective Use of Gemini:
@@ -314,18 +315,33 @@ Dynamic Learning Plan Implementation: Explore the implementation of dynamic lear
 ## 10. Bonus points Section (Tooling, Model Use, Deployment, Video) for "Education Bliss AI Agent"
 
 Youtube video link to demonstrate this is:   
-##  https://youtu.be/Zv74NtH8Q2Q
+## **https://youtu.be/Zv74NtH8Q2Q**
 
 
-## 11. Citations
+## 11. Summary:
+
+The implemented ADK-based multi-agent education system comprises an EducationSupervisor orchestrating three specialized agents: CurriculumAgent, TutorAgent, and QuizAgent.
+
+💎 The **CurriculumAgent** is responsible for interpreting the user's learning goal and generating a structured learning plan.
+
+💎 The **TutorAgent** teaches concepts from the learning plan, answers follow-up questions, and utilizes a GoogleSearchTool for updated information.
+
+💎 The **QuizAgent** generates quizzes based on the taught material and grades student answers using a GradeQuizTool.
+
+💎 The **EducationSupervisor** orchestrates the overall learning flow by delegating tasks, managing session state with InMemorySessionService, and handling long-term memory with ADKInMemoryMemory. It now dynamically iterates through the learning plan, teaching and quizzing on each concept.
+
+**Key concepts implemented include a multi-agent system, LLM-powered agents, custom and built-in tools, session and long-term memory, and observability. Observability is integrated via a MockTracer (simulating OpenTelemetry) in each agent and tool to log execution flow and interactions. Comprehensive pytest unit and integration tests, including an end-to-end test for the EducationSupervisor, unit tests for individual agents, supervisor routing tests, and a dedicated observability test using caplog, ensure the system's correctness and tracing functionality.**
+
+
+## 12. Citations
 
 @misc{agents-intensive-capstone-project,
-    author = {Addison Howard and Brenda Flynn and Eric Schmidt and Kanchana Patlolla and Kinjal Parekh and María Cruz and Polong Lin and Ray Harvey},
+    author = {Addison Howard and Brenda Flynn and Eric Schmidt and Kanchana Patlolla and Kinjal Parekh and María Cruz and Naz Bayrak and Polong Lin and Ray Harvey},
     title = {Agents Intensive - Capstone Project},
     year = {2025},
     howpublished = {\url{https://kaggle.com/competitions/agents-intensive-capstone-project}},
     note = {Kaggle}
 }
 
-## 12. Author and Core Contributor:  
-Vidushi Chouksey:  https://www.linkedin.com/in/vidushi2222/
+## 13. Author and Core Contributor:  
+Vidushi Chouksey:  **https://www.linkedin.com/in/vidushi2222/**
