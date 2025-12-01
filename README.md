@@ -1,6 +1,6 @@
 # education-bliss-ai-agent
 
-## Education Bliss AI Agent: a personalized multi-agent learning system
+## Education Bliss AI Agent: a personalized learning multi-agent ecosystem
 
 <img width="1024" height="1024" alt="Gemini_Generated_Image_3gb0ra3gb0ra3gb0" src="https://github.com/user-attachments/assets/311eb33c-2fab-4076-95b9-94aee57bdec1" />
 
