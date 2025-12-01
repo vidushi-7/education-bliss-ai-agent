@@ -610,9 +610,10 @@ The implementation achieves a sophisticated, fully functional agentic workflow t
 
 ## 8. Youtube Video Submission Link:  
 
-##  https://youtu.be/Zv74NtH8Q2Q
+##  https://youtu.be/XZcbYtie_KM
 
 ***
+
 ## 9. Agent Deployment: "Education Bliss AI Agent"
 
 ✅ Central Component: EducationSupervisor (The Orchestrator)
@@ -659,10 +660,7 @@ The multi-agent education system development, encompassing agent implementation,
 ## 10. Bonus points Section (Tooling, Model Use, Deployment, Video) for "Education Bliss AI Agent"
 
 Youtube video link to demonstrate this is:   
-## **https://youtu.be/Zv74NtH8Q2Q**
-
-***
-## 11. Summary:
+## https://youtu.be/XZcbYtie_KM
 
 The implemented ADK-based multi-agent education system comprises an EducationSupervisor orchestrating three specialized agents: CurriculumAgent, TutorAgent, and QuizAgent.
 
@@ -686,9 +684,10 @@ The implemented ADK-based multi-agent education system comprises an EducationSup
 | **Observability** | OpenTelemetry Simulation | `MockTracer` injected into all agents and tools to log spans/events. |
 
 💎 **The multi-agent education system development, encompassing agent implementation, tool integration, supervisor setup, and comprehensive testing with mock ADK components, has been successfully completed.**
+
 ***
 
-## 12. Citations
+## 11. Citations
 
 @misc{agents-intensive-capstone-project,
     author = {Addison Howard and Brenda Flynn and Eric Schmidt and Kanchana Patlolla and Kinjal Parekh and María Cruz and Naz Bayrak and Polong Lin and Ray Harvey},
@@ -699,6 +698,6 @@ The implemented ADK-based multi-agent education system comprises an EducationSup
 }
 ***
 
-## 13. Author and Core Contributor:  
+## 12. Author and Core Contributor:  
 Vidushi Chouksey:  **https://www.linkedin.com/in/vidushi2222/**
 ***
