@@ -4,33 +4,264 @@
 
 <img width="1024" height="1024" alt="Gemini_Generated_Image_3gb0ra3gb0ra3gb0" src="https://github.com/user-attachments/assets/311eb33c-2fab-4076-95b9-94aee57bdec1" />
 
-## 1. The Pitch: Problem and Solution
+### 1. The Pitch (Problem, Solution, Value)
 
-### Problem Statement: The Crisis of Generalized Learning
+* **Problem: The Crisis of Generalized Learning**
+    Traditional online education suffers from a rigid "one-size-fits-all" approach. Whether it's self-paced courses or static platforms, learners are forced into a single curriculum regardless of their prior knowledge or goals. This leads to **high dropout rates** due to disengagement, **inefficient learning** where time is wasted on known concepts, and a **lack of contextual depth** that fails to connect material to the learner's specific needs.
 
-Traditional online education, including self-paced courses and static learning platforms, suffers from a fundamental flaw: a **one-size-fits-all approach**. Learners are presented with the same curriculum and resources regardless of their prior knowledge, learning style, or specific career goals. This lack of personalization leads to:
-1.  **High Dropout Rates:** Students disengage when content is too basic or too advanced.
-2.  **Inefficient Learning:** Valuable time is spent on concepts already mastered.
-3.  **Lack of Contextual Depth:** Generalized materials fail to connect concepts to the learner’s specific context (e.g., industry or regional relevance).
+* **Solution: The Education Bliss AI Agent Ecosystem**
+    We have built a decentralized, multi-agent ecosystem that delivers truly personalized 1:1 education. Instead of relying on a single, overburdened LLM, our solution utilizes a hierarchical team of specialized agents—orchestrated by a central **EducationSupervisor**—to autonomously manage the entire learning lifecycle.
 
-### Solution: A Personalized, Multi-Agent Learning System
+* **Value: Adaptive & Autonomous Mastery**
+    Our system transforms passive content consumption into an active, adaptive journey. By leveraging specialized roles—planning, teaching, and assessing—our ecosystem ensures that every lesson is dynamically generated, grounded in real-time data, and rigorously evaluated. This architecture provides the scalability of digital platforms with the tailored efficacy of a human tutor.
 
-The **Education Bliss AI Agent** is a multi-agent system designed to address this crisis by providing **personalized, adaptive, and autonomous 1:1 education**. Instead of a single, overburdened LLM, we use a decentralized architecture where specialized agents collaborate to manage the complete learning lifecycle.
+***
+### 2. Core Concept & Value
 
-**Core Concept & Value:**
+* **Central Idea: Dynamic Orchestration over Static Curriculum**
+    At the heart of the Education Bliss ecosystem is the shift from static content to a dynamic, agent-driven learning journey. Our innovation lies in the **meaningful use of agents** to decouple complex educational tasks, ensuring higher quality and reliability than a monolithic model could achieve.
 
-The core value is the shift from static curriculum to a **dynamic learning journey** managed by specialized, highly efficient agents. The **meaningful use of agents is central** to this solution, as it separates complex tasks:
-* **Planning & Strategy** (Curriculum Agent)
-* **Teaching & Grounding** (Tutor Agent)
-* **Assessment & Feedback** (Quiz Agent)
+* **Meaningful Agent Architecture:**
+    Our solution is built on a specific, functional division of labor where agents are not just "chatbots," but specialized workers:
+    * **The Architect (CurriculumAgent):** Interprets vague user goals (e.g., "Learn Python") into structured, step-by-step learning paths.
+    * **The Instructor (TutorAgent):** Delivers grounded instruction using the **GoogleSearchTool** to fetch real-time examples, ensuring content is never stale.
+    * **The Evaluator (QuizAgent):** Provides objective assessment using a custom **GradeQuizTool**, separating the creation of questions from the logic of grading.
 
-This architecture guarantees high-quality responses, reliable tool use, and superior tracking of student progress via centralized supervisor management.
+* **Systemic Innovation:**
+    Value is driven by the **EducationSupervisor**, which acts as the system's "brain." It manages state via **InMemorySessionService** (to track immediate progress) and **Long-Term Memory** (to retain learning plans and grades). This allows the system to pause, resume, and adapt over time, solving the continuity problem often found in chat-based interfaces.
 
 ***
 
-## 2. Architecture and Implementation
+## 2. The Implementation (Architecture, Code):
 
 <img width="2816" height="1536" alt="Gemini_Generated_Image_h2grauh2grauh2gr" src="https://github.com/user-attachments/assets/f85c930b-39c2-46d5-8a5f-28057b227b61" />
+
+## 🏛️ System Architecture and The Orchestrator
+
+The system is built on a **Multi-Agent Architecture**, which delegates specialized tasks to dedicated agents, all managed by a central **EducationSupervisor**.
+
+  * **Specialized Agents:**
+      * **`CurriculumAgent`**: Focuses on the single task of generating the `learning plan`.
+      * **`TutorAgent`**: Handles teaching (`teach_concept`) and answering complex, grounded questions (`answer_question`).
+      * **`QuizAgent`**: Manages assessment creation (`generate_quiz`) and score processing (`grade_submission`).
+  * **The Orchestrator (`EducationSupervisor`)**: This agent ties the entire educational workflow together. It initializes all specialized agents, session services, and memory, and then calls the agents sequentially through its `supervise_education` method to manage the end-to-end user experience.
+
+### Code Snippet: Supervisor Initialization (Mocked ADK)
+
+The Supervisor's `init` method is the control hub, instantiating all agents, memory components, and the shared tracer.
+
+```python
+class EducationSupervisor(MockAgentSupervisor):
+    def __init__(self, tracer, session_service, long_term_memory, llm):
+        super().__init__(tracer)
+        self.session_service = session_service
+        self.long_term_memory = long_term_memory
+        
+        # Initialize Specialized Agents with shared components
+        self.curriculum_agent = CurriculumAgent(llm=llm, tracer=tracer)
+        self.tutor_agent = TutorAgent(llm=llm, tracer=tracer)
+        self.quiz_agent = QuizAgent(llm=llm, tracer=tracer)
+        # Initialize Tools (passed to the agents later, but instantiated here for context)
+        self.google_search_tool = MockGoogleSearchTool(tracer=tracer)
+        self.grade_quiz_tool = MockGradeQuizTool(tracer=tracer)
+        
+    # ... supervise_education method follows ...
+```
+
+-----
+
+## 🛠️ Tool Use for Grounded Teaching and Structured Assessment
+
+Your architecture leverages two distinct tool types: a **built-in** tool simulation and a **custom** tool simulation. Tools are critical because they allow the agents to perform actions *outside* of the LLM's raw generative capability, enabling **real-time grounding** and **consistent logic**.
+
+  * **`MockGoogleSearchTool` (Built-in Simulation)**: This tool, used by the `TutorAgent`, simulates fetching real-time information to ensure teaching is current and grounded, as seen in the `answer_question` method.
+  * **`MockGradeQuizTool` (Custom Simulation)**: This tool, used by the `QuizAgent`, simulates a deterministic grading function. By offloading grading to a structured tool, you ensure **consistent assessment logic** that doesn't rely on the LLM's interpretation for scoring.
+
+### Code Snippet: Tool Integration in Agent Method (Mocked ADK)
+
+The `TutorAgent`'s use of the `MockGoogleSearchTool` would involve a method that calls the tool's `run` function to enrich its answer.
+
+```python
+class TutorAgent(MockLlmAgent):
+    # ... init method ...
+    
+    def answer_question(self, question: str):
+        # Simulate Google Search Tool execution
+        search_tool = MockGoogleSearchTool(tracer=self.tracer)
+        search_result = search_tool.run(query=question)
+        
+        # Construct the prompt with the grounded information
+        prompt = f"Answer the user's question: '{question}' based on this search result: {search_result}"
+        
+        # Simulate LLM call to formulate final answer
+        response = self.llm.predict(prompt)
+        return response
+```
+
+-----
+
+## 🧠 Session State and Long-Term Memory
+
+The system maintains a **personalized, multi-session learning experience** by managing two layers of memory:
+
+1.  **Session State (`MockInMemorySessionService`):** Stores short-term, transient data like the current teaching content or the quiz generated for the *active session*.
+2.  **Long-Term Memory (`MockADKInMemoryMemory`):** Stores durable knowledge like the final `learning plan` and `final grades`. This allows a student to pick up their progress across multiple sessions.
+
+The `EducationSupervisor` is responsible for shuttling data between the agents and these memory services.
+
+-----
+
+## 🔬 Observability with MockTracer
+
+To ensure the system's correctness and debug its flow, the entire architecture is instrumented with a **`MockTracer`**. This simulates the OpenTelemetry tracing provided by a real ADK deployment.
+
+  * **Shared Instance**: A single `MockTracer` instance is initialized in the Supervisor and passed to *every* agent and tool (`CurriculumAgent`, `TutorAgent`, `QuizAgent`, `MockGoogleSearchTool`, `MockGradeQuizTool`).
+  * **Span Creation**: Each critical step (e.g., generating a plan, grading a quiz) uses explicit tracing calls (like `self.tracer.start_as_current_span(...)`) to log the start, end, and context of the operation.
+
+### Code Snippet: Tracing in the Supervisor's Workflow (Mocked ADK)
+
+The `supervise_education` method demonstrates how tracing wraps the entire multi-agent interaction flow.
+
+```python
+class EducationSupervisor(MockAgentSupervisor):
+    # ... init method ...
+    
+    def supervise_education(self, goal: str, student_answer: str):
+        with self.tracer.start_as_current_span("supervise_education_flow") as span:
+            span.set_attribute("user.goal", goal)
+            
+            # Step 1: Curriculum Agent generates plan
+            with self.tracer.start_as_current_span("generate_learning_plan"):
+                plan = self.curriculum_agent.generate_learning_plan(goal)
+                self.long_term_memory.write("learning_plan", plan)
+            
+            # Step 2: Tutor Agent teaches
+            with self.tracer.start_as_current_span("tutor_teach_concept"):
+                teaching_content = self.tutor_agent.teach_concept(plan)
+                self.session_service.set_state("teaching_content", teaching_content)
+                
+            # ... subsequent steps for quiz and grading ...
+            
+            return {"status": "Complete", "session_data": self.session_service.get_state()}
+```
+
+This structure clearly illustrates how the **Multi-Agent Architecture**, **Tool Use**, **Session/Long-Term Memory**, and **Observability** are all tightly integrated within the orchestrating `EducationSupervisor`.
+
+## 1\. The Hierarchical Multi-Agent Core
+
+The system is led by the **EducationSupervisor**, which acts as the control loop, managing the state and delegating tasks sequentially to specialized worker agents.
+
+### **EducationSupervisor (Orchestrator)** 🧠
+
+The supervisor manages the session, instantiates all worker agents, and initializes the memory and observability layers.
+
+```python
+class EducationSupervisor(MockAgentSupervisor):
+    """EducationSupervisor orchestrates the multi-agent education system."""
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # 1. State and Memory Services
+        self.session_service = MockInMemorySessionService()
+        self.long_term_memory = MockADKInMemoryMemory()
+        
+        # 2. Observability (Single Tracer passed to all)
+        self.tracer = MockTracer("education_supervisor")
+        
+        # 3. Agent Instantiation
+        self.curriculum_agent = CurriculumAgent(tracer=self.tracer)
+        self.tutor_agent = TutorAgent(tracer=self.tracer)
+        self.quiz_agent = QuizAgent(tracer=self.tracer)
+        # ... logging and other setup ...
+```
+
+The core logic resides in the `supervise_education` method, which enforces a **sequential workflow**: Plan → Teach → Assess.
+
+```python
+# Snippet from EducationSupervisor.supervise_education() method
+# Step 1: Planning
+learning_plan = self.curriculum_agent.draft_plan(learning_goal)
+self.session_service.update_session_data(session_id, {"learning_plan": learning_plan})
+self.long_term_memory.store_knowledge(f"{session_id}_plan", learning_plan) # Long-Term persistence
+# Step 2: Teaching (example for the first concept)
+first_concept = "Basic concepts of Python programming"
+teaching_content = self.tutor_agent.teach_concept(first_concept)
+self.session_service.update_session_data(session_id, {"current_concept": first_concept, "teaching_content": teaching_content}) # Short-Term State update
+# Step 3: Assessment (Quiz)
+# ... delegation to quiz_agent ...
+```
+
+-----
+
+## 2\. Agent Specialization and Tool Use 🛠️
+
+Each worker agent is an `LlmAgent` specialized with specific prompts and tools to fulfill its role.
+
+| Agent | Role | Key Method & Tool Use | Code Snippet Example |
+| :--- | :--- | :--- | :--- |
+| **CurriculumAgent** | The Planner | Uses an LLM prompt to generate a structured `Learning Plan` based on the user's goal. | `plan = self.llm.predict(prompt=prompt_template.format(learning_goal=learning_goal))` |
+| **TutorAgent** | The Instructor | Uses the **Built-in `GoogleSearchTool`** to ground answers in external reality when answering questions. | `search_results = self.search_tool.run(question)` |
+| **QuizAgent** | The Assessor | Uses the **Custom `GradeQuizTool`** for objective grading, returning structured data. | `grade_results = self.grade_quiz_tool.run(quiz=quiz, student_answers=mock_answers)` |
+
+### **Example of Tool Use in TutorAgent**
+
+The `answer_question` method shows the integration of a search tool to provide grounded information.
+
+```python
+# Snippet from TutorAgent.answer_question()
+def answer_question(self, question: str) -> str:
+    # 1. Tool execution (GoogleSearchTool is simulated here)
+    search_results = self.search_tool.run(question) 
+
+    # 2. LLM reasoning over search results
+    prompt_template = MockPromptTemplate(
+        template="""You are an expert tutor. Answer the following question based on the provided search results and your knowledge.
+        Search Results: {search_results}
+        Question: {question}
+        """
+    )
+    prompt = prompt_template.format(search_results=search_results, question=question)
+    return self.llm.predict(prompt=prompt)
+```
+
+-----
+
+## 3\. State Management and Memory 💾
+
+The system uses two distinct memory components to maintain context across the learning journey.
+
+  * **Short-Term State (`InMemorySessionService`):** Tracks the immediate progress of the *current* lesson, such as the `current_concept` being taught or a `quiz_draft`. This ensures seamless handoff between agents.
+  * **Long-Term Memory (`ADKInMemoryMemory`):** Mimics a persistent store for high-value artifacts like the finalized `Learning Plan` and `Quiz Grades`. This allows the student's history to be recalled in future sessions.
+
+-----
+
+## 4\. Observability Layer (MockTracer) 📊
+
+A robust observability layer, which simulates **OpenTelemetry** tracing, is fundamental to the architecture. A single `MockTracer` instance is created by the `EducationSupervisor` and passed to every agent and tool.
+
+  * **Function:** Every agent call (`predict`) and tool execution (`run`) is wrapped in a `start_as_current_span` context manager.
+  * **Tracing:** The system captures specific **Attributes** (e.g., `prompt_length`, `quiz_score`) and records **Events** (e.g., `LLM_prediction_complete`, `concept_taught`) for debugging and performance monitoring.
+
+### **Example of Tracing in TutorAgent**
+
+```python
+# Snippet from TutorAgent.teach_concept()
+def teach_concept(self, concept: str) -> str:
+    with self.tracer.start_as_current_span("TutorAgent.teach_concept"):
+        # ... LLM prediction logic ...
+        explanation = self.llm.predict(prompt=prompt)
+        
+        # Log event and attribute upon completion
+        self.tracer.add_event("concept_taught", {"explanation_length": len(explanation)})
+        return explanation
+```
+
+This comprehensive design ensures that the system is not only intelligent but also modular, transparent, and capable of maintaining long-term student context.
+***
+
+## **Architecture Overview**
+
+The system operates on a **Hierarchical Multi-Agent Structure**. A central `EducationSupervisor` acts as the "brain," orchestrating a team of specialized agents (`CurriculumAgent`, `TutorAgent`, `QuizAgent`) to deliver a cohesive educational experience. This separation of concerns allows for modularity, easier debugging, and specialized LLM prompting for each role.
 
 The system operates on a hierarchical structure orchestrated by a Supervisor, enabling seamless delegation of tasks and persistent memory management.
 
@@ -42,9 +273,6 @@ The system operates on a hierarchical structure orchestrated by a Supervisor, en
 | **QuizAgent** | LlmAgent | **Assesses** student knowledge by generating quizzes and grading submissions. | **Tool Use** (`GradeQuizTool`) |
 | **ADK Memory Services** | ADK Memory | `InMemorySessionService` tracks current lesson status. `ADKInMemoryMemory` stores permanent records (e.g., final grades, completed plans). | **Session State & Long-Term Memory** |
 
-## **Architecture Overview**
-
-The system operates on a **Hierarchical Multi-Agent Structure**. A central `EducationSupervisor` acts as the "brain," orchestrating a team of specialized agents (`CurriculumAgent`, `TutorAgent`, `QuizAgent`) to deliver a cohesive educational experience. This separation of concerns allows for modularity, easier debugging, and specialized LLM prompting for each role.
 
 ## **Implemented Features & Technical Breakdown**
 
@@ -78,7 +306,7 @@ The code includes a robust observability layer using a `MockTracer` that simulat
 * **Implementation:** Every agent action (predict), tool execution (run), and supervisor delegation is wrapped in a `start_as_current_span` context manager.
 * **Metrics & Events:** The tracer captures specific attributes (e.g., `prompt_length`, `quiz_score`) and events (e.g., `LLM_prediction_complete`, `quiz_graded`). This allows developers to debug exactly *where* a lesson might have failed or why a specific answer was given.
 
-## **Feature Summary Table**
+## **Implemented Features Summary Table**
 
 | Feature Category | Implementation in Code | Agent/Component Responsible |
 | :--- | :--- | :--- |
@@ -87,7 +315,7 @@ The code includes a robust observability layer using a `MockTracer` that simulat
 | **Memory** | Session & Long-term persistence | `InMemorySessionService` (Session), `ADKInMemoryMemory` (Long-term). |
 | **Observability** | OpenTelemetry Simulation | `MockTracer` injected into all agents and tools to log spans/events. |
 
-### Project Journey and Technical Implementation
+### Project Journey and Implementation
 
 Our project journey followed a strict engineering discipline to ensure robustness and observability:
 
@@ -103,6 +331,9 @@ Our project journey followed a strict engineering discipline to ensure robustnes
 
 ## 3. Multi Agent Design and Workflow:
 
+<img width="1024" height="1024" alt="Gemini_Generated_Image_9fdrzr9fdrzr9fdr" src="https://github.com/user-attachments/assets/5dbe16d8-dae4-44b6-a7e3-52a85c7c8e94" />
+
+##
 1.  **Central Node:** Place a large, central cloud icon labeled **EducationSupervisor (Orchestrator)**.
     * *Role Tag:* Manages State, Memory, and Delegation.
 2.  **Input/Output:** A box on the left labeled **Student/User** sends an arrow to the Supervisor labeled **"Learning Goal"**.
@@ -130,121 +361,159 @@ Our project journey followed a strict engineering discipline to ensure robustnes
 
 ***
 
-## 4. Technical Implementation (Architecture, Code)
+## 4. Technical Implementation:
 
 <img width="1024" height="1024" alt="Gemini_Generated_Image_tpldf0tpldf0tpld" src="https://github.com/user-attachments/assets/0ef0d2c5-eb41-410c-878f-1fb1b670be3b" />
 
-This solution demonstrates the use of four (4) key ADK concepts:
+-----
 
-## Multi-Agent Architecture (LlmAgent): 
-Four specialized agents (CurriculumAgent, TutorAgent, QuizAgent, and EducationSupervisor) collaborate to manage the end-to-end user experience.
+# Technical Implementation
 
-## Tool Use (Tools): 
-The system implements the GoogleSearchTool (for real-time, grounded teaching) and the custom GradeQuizTool (for structured, consistent assessment logic).
+## 1\. Overview
 
-## Session State and Long-Term Memory (ADK Session Services & Memory): 
-The EducationSupervisor manages short-term state via InMemorySessionService and long-term knowledge (learning plans, final grades) via ADKInMemoryMemory, enabling personalized, multi-session learning.
+This project implements a personalized education system using the **Google Agent Development Kit (ADK)** pattern. It features a hierarchical multi-agent architecture where specialized agents collaborate to create curricula, teach concepts, and assess student knowledge. The implementation focuses on four core ADK pillars: **Multi-Agent Orchestration**, **Tool Use**, **Session State & Long-Term Memory**, and **Observability**.
 
-## Observability (Tracer): 
-All agents and the Supervisor are initialized with a shared MockTracer. The code includes explicit span creation (with self.tracer.start_as_current_span(...)), attribute setting, and event logging to demonstrate how the ADK's observability features track the flow and performance of the multi-agent system.
+-----
 
-File 1: education_agents_adk.py (Agent Definitions and Logic)
-This file contains the multi-agent system definition, including the CurriculumAgent, TutorAgent, QuizAgent, the GradeQuizTool, and the orchestrating EducationSupervisor. It also includes the mock ADK components to ensure the code is runnable and demonstrable within a Colab environment while showcasing the correct ADK structure for observability, state, and memory.
+## 2\. Core Concepts & Architecture
 
-File 2: test_education_agents.py (Pytest Unit and Integration Tests)
-This file includes comprehensive tests for all agents and the supervisor, verifying core functionalities, tool use, memory management, and observability logging.
+The solution demonstrates the following ADK concepts:
 
-The education_agents_adk.py file implements a mock multi-agent education system using simulated Google Agent Development Kit (ADK) components. Here's a breakdown of its key sections and how they work together:
+### 🧩 Multi-Agent Architecture
 
-ADK Configuration:
-PROJECT_ID and LOCATION: These variables are placeholders for your Google Cloud Project ID and region, respectively. They are used to configure the (mock) Vertex AI environment, which would typically connect to real Gemini API models.
-ADK_CONFIG: A dictionary holding various configuration parameters for the simulated ADK environment, such as project_id, location, model_name, and paths for history and long-term memory files.
+The system operates on a hierarchical structure where a supervisor delegates tasks to specialized workers.
 
+  * **Sequential Workflow:** The `EducationSupervisor` manages the lifecycle: `Plan -> Teach -> Assess`.
+  * **Specialization:** Each agent (`CurriculumAgent`, `TutorAgent`, `QuizAgent`) has a distinct persona and responsibility, reducing hallucination and improving focus.
 
-Mock ADK Components:
-This section defines mock classes that mimic the behavior of real ADK components. This allows the system to be developed and tested without requiring a full ADK installation.
+### 🛠 Tool Use
 
-✅ MockTracer: Simulates an OpenTelemetry Tracer for observability. It logs span starts, ends, attributes, and events, helping to visualize the flow of execution and agent interactions.
+Agents are equipped with deterministic tools to ground their capabilities.
 
-✅ MockLlmAgent: A base class that simulates adk.agents.LlmAgent. It takes an LLM and optional tools. Its predict method wraps the LLM call with tracing capabilities.
+  * **`GoogleSearchTool`:** Used by the `TutorAgent` to fetch real-time, grounded information (e.g., "What are the applications of Python?").
+  * **`GradeQuizTool`:** A custom tool used by the `QuizAgent` to perform structured grading logic, returning consistent JSON outputs (Score + Feedback).
 
-✅ MockGoogleLlm: Simulates adk.llms.GoogleLlm. Its predict method provides hardcoded, mock responses based on keywords in the prompt (e.g., [MOCK PLAN], [MOCK TEACHING], [MOCK QUIZ]), replacing actual Gemini API calls.
+### 🧠 Session & Long-Term Memory
 
-✅ MockPromptTemplate: A simple class that simulates prompt templating by formatting a given template string with provided keyword arguments.
+The system maintains context across the user's journey using distinct memory services.
 
-✅ MockTool: A base class for tools, including an initializer for the MockTracer.
+  * **Session State (`InMemorySessionService`):** Tracks transient data like the *current concept* being taught or the *current quiz* draft. This allows the system to pause/resume within a specific lesson.
+  * **Long-Term Memory (`ADKInMemoryMemory`):** acts as a permanent store for high-value artifacts like the *Full Learning Plan* and *Final Grades*. This enables the agent to recall a user's progress across different sessions.
 
-✅ MockGoogleSearchTool: Simulates adk.tools.GoogleSearchTool. Its run method returns a predefined mock search result and logs its activity using MockTracer.
+### 👁 Observability
 
-✅ MockGradeQuizTool: Simulates a custom grading tool. Its run method takes a quiz and student answers, returning a mock grade and feedback. It also uses MockTracer.
+Enterprise-grade tracing is implemented using a `MockTracer` (simulating OpenTelemetry).
 
-✅ MockAgentSupervisor: A base class simulating adk.agents.AgentSupervisor.
+  * **Spans:** Every agent action (`predict`) and tool execution (`run`) is wrapped in a trace span.
+  * **Events & Attributes:** Critical data points (e.g., `quiz_score`, `prompt_length`) are logged as attributes, allowing developers to debug the exact flow of execution.
 
-✅ MockInMemorySessionService: Simulates adk.session_services.InMemorySessionService to manage short-term session data.
+-----
 
-✅ MockADKInMemoryMemory: Simulates adk.memory.ADKInMemoryMemory for long-term knowledge storage.
+## 3\. Codebase Breakdown
 
+### `education_agents_adk.py`
 
-## Agent Definitions
-These are the core specialized agents of the education system, built upon the mock ADK components:
+This is the core implementation file containing the agent definitions, tools, and supervisor logic. It includes a **Mock ADK Layer** to allow the system to run in environments (like Colab) without requiring a full GCP billing setup for demonstration purposes.
 
-## ⭐️ CurriculumAgent: 
-Inherits from MockLlmAgent. Its generate_learning_plan method uses MockGoogleLlm and a MockPromptTemplate to create a mock learning plan based on a given goal. It integrates MockTracer for observability.
+#### **Key Components:**
 
-## ⭐️ TutorAgent: 
-Inherits from MockLlmAgent. It uses MockGoogleLlm for teach_concept and answer_question methods. It also leverages MockGoogleSearchTool within answer_question to simulate fetching external information, all with MockTracer integrated.
+| Component | Type | Responsibility |
+| :--- | :--- | :--- |
+| **`EducationSupervisor`** | **Supervisor** | Orchestrates the loop: calls `CurriculumAgent` once, then iterates through the plan calling `TutorAgent` and `QuizAgent` for each concept. Manages `SessionService` updates. |
+| **`CurriculumAgent`** | `LlmAgent` | Takes a vague user goal ("Learn Python") and outputs a structured text plan. |
+| **`TutorAgent`** | `LlmAgent` | Explains specific concepts from the plan. Uses `GoogleSearchTool` to answer follow-up questions. |
+| **`QuizAgent`** | `LlmAgent` | Generates multiple-choice quizzes. Uses `GradeQuizTool` to calculate scores. |
+| **`GoogleSearchTool`** | Tool | Simulates retrieving search results to ground the LLM's answers. |
+| **`GradeQuizTool`** | Tool | Deterministic logic that compares student answers to the answer key. |
+| **`MockTracer`** | Utility | Captures execution flow (`start_as_current_span`) for observability validation. |
 
-## ⭐️ QuizAgent: 
-Inherits from MockLlmAgent. It uses MockGoogleLlm to generate_quiz and MockGradeQuizTool for grade_submission, ensuring comprehensive tracing.
+#### **The Orchestration Loop (`supervise_education`):**
 
-## ⭐️ EducationSupervisor:
-This class orchestrates the entire multi-agent workflow:
+1.  **Plan:** Supervisor asks `CurriculumAgent` for a plan → Store in Memory.
+2.  **Loop:** For each concept in the plan:
+      * **Teach:** Delegate to `TutorAgent` → Update Session.
+      * **Q\&A:** `TutorAgent` uses Search Tool for follow-up questions → Update Session.
+      * **Quiz:** Delegate to `QuizAgent` to create a test → Update Session.
+      * **Grade:** Delegate to `QuizAgent` (using Tool) to grade → Store in Long-Term Memory.
+3.  **Result:** Return full session history and memory entries.
 
-## __init__: 
+-----
 
-❇️ Initializes instances of MockInMemorySessionService (for session state), MockADKInMemoryMemory (for long-term memory), and each of the specialized agents (CurriculumAgent, TutorAgent, QuizAgent). A single MockTracer instance is passed to all agents and tools to maintain a consistent tracing context.
+### `test_education_agents.py`
 
-❇️ supervise_education: This is the main method that simulates the end-to-end educational flow
+Comprehensive testing suite using `pytest` to verify the "trajectory" of the agents.
 
-❇️ Delegates to CurriculumAgent to generate a learning plan and stores it in session and long-term memory.
+  * **End-to-End Test:** Simulates a full user session ("Introduction to Python") and asserts that the plan was created, concepts were taught, and grades were stored in long-term memory.
+  * **Unit Tests:** Verifies individual agent logic (e.g., ensuring `QuizAgent` actually generates a string starting with `[MOCK QUIZ]`).
+  * **Observability Test:** Uses `caplog` to inspect logs and verify that `MockTracer` is correctly generating "Starting span" and "Ending span" events.
 
-❇️ Delegates to TutorAgent to teach a concept and stores the teaching content in session memory.
+-----
 
-❇️ Calls TutorAgent.answer_question to simulate a follow-up interaction using the search tool.
+## 4\. Setup & Execution
 
-❇️ Delegates to QuizAgent to generate a quiz and stores it in session memory.
+### Prerequisites
 
-❇️ Simulates a student's submission and delegates to QuizAgent to grade it, storing results in session and long-term memory.
+  * Python 3.10+
+  * `pytest`
 
-❇️ Returns a dictionary containing the status, session data, and long-term memory entries for the session.
+### Installation
 
-❇️ Throughout the supervise_education method, MockTracer methods are called to record the flow and context of operations, demonstrating how observability would be captured in a real ADK application.
+Clone the repository and install dependencies:
 
+```bash
+git clone https://github.com/vidushi-7/education-bliss-ai-agent.git
+cd education-bliss-ai-agent
+pip install google-adk pytest # Install ADK if running in a real environment
+```
 
-##  Instructions for Setup and Running the Code
-Environment: Clone the GitHub repository:   **https://github.com/vidushi-7/education-bliss-ai-agent.git**
+### Configuration
 
+Open `education_agents_adk.py` and update the configuration dictionary with your Google Cloud details:
 
-**Configuration:**
-In education_agents_adk.py, replace "your-actual-gcp-project-id" and "us-central1" with your actual Google Cloud Project ID and preferred LOCATION for Vertex AI integration.
+```python
+ADK_CONFIG = {
+    "project_id": "your-actual-gcp-project-id", # <--- Update this
+    "location": "us-central1",                  # <--- Update this
+    "model_name": "gemini-1.5-flash",
+}
+```
 
-**Installation:**
-Install necessary dependencies (pytest).
+### Running the System
 
-**Execution:**
+You can run the supervisor directly to see the agent interaction loop:
 
-**Run the Supervisor:**
-Instantiate and run the supervisor to simulate an education flow.
+```python
+from education_agents_adk import EducationSupervisor
 
-**Run Tests:**
-Execute the comprehensive tests to verify all agent logic.
+supervisor = EducationSupervisor()
+result = supervisor.supervise_education(learning_goal="Introduction to Data Science")
+print(result)
+```
 
-##  💡💡💡 **Here is the screenshot of all the Tests Passed successfully.** 💡💡💡
+### Running Tests
+
+Execute the test suite to verify the architecture:
+
+```bash
+pytest test_education_agents.py
+```
+
+**✅ Verification:**
+Refer to the screenshot below confirming that all unit, integration, and observability tests passed successfully.
+
+##  💡💡💡 **All Tests got Passed successfully.** 💡💡💡
 
 <img width="1439" height="546" alt="Screen Shot 2025-11-28 at 6 07 56 PM" src="https://github.com/user-attachments/assets/ea791563-c48e-490a-ae46-593a79d471c1" />
 
+-----
 
+## 5\. Future Improvements
+
+  * **Replace Mocks:** Swap `MockGoogleLlm` and `MockTracer` with production `vertexai` and `opentelemetry` libraries.
+  * **Vector Memory:** Upgrade `ADKInMemoryMemory` to a Vector Database (e.g., Pinecone) for semantic retrieval of past lessons.
+  * **Deployment:** Containerize the `EducationSupervisor` as a **Cloud Run** service.
 ***
+
 ## 5. Effective Use of Gemini:
 
 Here is the analysis of the effective use of Gemini within the **Education Bliss AI Agent Ecosystem**.
