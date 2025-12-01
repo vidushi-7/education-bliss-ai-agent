@@ -507,14 +507,43 @@ Refer to the screenshot below confirming that all unit, integration, and observa
 
 -----
 
-## 5\. Future Improvements
+## Future Improvements
 
   * **Replace Mocks:** Swap `MockGoogleLlm` and `MockTracer` with production `vertexai` and `opentelemetry` libraries.
   * **Vector Memory:** Upgrade `ADKInMemoryMemory` to a Vector Database (e.g., Pinecone) for semantic retrieval of past lessons.
   * **Deployment:** Containerize the `EducationSupervisor` as a **Cloud Run** service.
 ***
 
-## 5. Effective Use of Gemini:
+## 5. Bonus points (Tooling, Model Use, Deployment, Video) for "Education Bliss AI Agent"
+
+Youtube video link to demonstrate this is:   
+## https://youtu.be/XZcbYtie_KM
+
+The implemented ADK-based multi-agent education system comprises an EducationSupervisor orchestrating three specialized agents: CurriculumAgent, TutorAgent, and QuizAgent.
+
+💎 The **CurriculumAgent** is responsible for interpreting the user's learning goal and generating a structured learning plan.
+
+💎 The **TutorAgent** teaches concepts from the learning plan, answers follow-up questions, and utilizes a GoogleSearchTool for updated information.
+
+💎 The **QuizAgent** generates quizzes based on the taught material and grades student answers using a GradeQuizTool.
+
+💎 The **EducationSupervisor** orchestrates the overall learning flow by delegating tasks, managing session state with InMemorySessionService, and handling long-term memory with ADKInMemoryMemory. It now dynamically iterates through the learning plan, teaching and quizzing on each concept.
+
+💎 **Key concepts implemented include a multi-agent system, LLM-powered agents, custom and built-in tools, session and long-term memory, and observability. Observability is integrated via a MockTracer (simulating OpenTelemetry) in each agent and tool to log execution flow and interactions. Comprehensive pytest unit and integration tests, including an end-to-end test for the EducationSupervisor, unit tests for individual agents, supervisor routing tests, and a dedicated observability test using caplog, ensure the system's correctness and tracing functionality.**
+
+## **Implemented Features Summary Table**
+
+| Feature Category | Implementation in Code | Agent/Component Responsible |
+| :--- | :--- | :--- |
+| **Multi-Agent** | Hierarchical Supervisor-Worker pattern | `EducationSupervisor` managing `Curriculum`, `Tutor`, `Quiz` agents. |
+| **Tools** | Built-in & Custom Tools | `TutorAgent` (Google Search), `QuizAgent` (GradeQuizTool). |
+| **Memory** | Session & Long-term persistence | `InMemorySessionService` (Session), `ADKInMemoryMemory` (Long-term). |
+| **Observability** | OpenTelemetry Simulation | `MockTracer` injected into all agents and tools to log spans/events. |
+
+💎 **The multi-agent education system development, encompassing agent implementation, tool integration, supervisor setup, and comprehensive testing with mock ADK components, has been successfully completed.**
+***
+
+## 6. Effective Use of Gemini:
 
 Here is the analysis of the effective use of Gemini within the **Education Bliss AI Agent Ecosystem**.
 
@@ -557,7 +586,7 @@ By using `gemini-1.5-flash` (which features a massive context window), the agent
 
 -----
 
-## 6. Future Scope of "Education Bliss AI Agent"
+## 7. Future Scope of "Education Bliss AI Agent"
 
 * **Redefining Personalized Learning:** Directly addresses the critical personalization gap in digital education by dynamically creating curricula, providing grounded tutoring, and delivering adaptive assessments tailored to each individual learner.
 * **Advanced Multi-Agent Architecture:** Leverages a modular system of specialized agents, advanced tool use, and persistent memory to deliver a highly responsive and intelligent learning experience.
@@ -568,7 +597,7 @@ By using `gemini-1.5-flash` (which features a massive context window), the agent
 
 ***
 
-## 7. Achievements of "Education Bliss AI Agent"
+## 8. Achievements of "Education Bliss AI Agent"
 
 The implementation achieves a sophisticated, fully functional agentic workflow that solves the core problem of static educational content.
 
@@ -606,12 +635,6 @@ The implementation achieves a sophisticated, fully functional agentic workflow t
 | **Tools** | Built-in & Custom Tools | `TutorAgent` (Google Search), `QuizAgent` (GradeQuizTool). |
 | **Memory** | Session & Long-term persistence | `InMemorySessionService` (Session), `ADKInMemoryMemory` (Long-term). |
 | **Observability** | OpenTelemetry Simulation | `MockTracer` injected into all agents and tools to log spans/events. |
-***
-
-## 8. Youtube Video Submission Link:  
-
-##  https://youtu.be/XZcbYtie_KM
-
 ***
 
 ## 9. Agent Deployment: "Education Bliss AI Agent"
@@ -656,39 +679,17 @@ Component: Span tracking, attributes, and events log every interaction across al
 | **Observability** | OpenTelemetry Simulation | `MockTracer` injected into all agents and tools to log spans/events. |
 
 The multi-agent education system development, encompassing agent implementation, tool integration, supervisor setup, and comprehensive testing with mock ADK components, has been successfully completed.
+***
 
-## 10. Bonus points Section (Tooling, Model Use, Deployment, Video) for "Education Bliss AI Agent"
+## 10. Youtube Video Submission Link:  
 
-Youtube video link to demonstrate this is:   
-## https://youtu.be/XZcbYtie_KM
-
-The implemented ADK-based multi-agent education system comprises an EducationSupervisor orchestrating three specialized agents: CurriculumAgent, TutorAgent, and QuizAgent.
-
-💎 The **CurriculumAgent** is responsible for interpreting the user's learning goal and generating a structured learning plan.
-
-💎 The **TutorAgent** teaches concepts from the learning plan, answers follow-up questions, and utilizes a GoogleSearchTool for updated information.
-
-💎 The **QuizAgent** generates quizzes based on the taught material and grades student answers using a GradeQuizTool.
-
-💎 The **EducationSupervisor** orchestrates the overall learning flow by delegating tasks, managing session state with InMemorySessionService, and handling long-term memory with ADKInMemoryMemory. It now dynamically iterates through the learning plan, teaching and quizzing on each concept.
-
-💎 **Key concepts implemented include a multi-agent system, LLM-powered agents, custom and built-in tools, session and long-term memory, and observability. Observability is integrated via a MockTracer (simulating OpenTelemetry) in each agent and tool to log execution flow and interactions. Comprehensive pytest unit and integration tests, including an end-to-end test for the EducationSupervisor, unit tests for individual agents, supervisor routing tests, and a dedicated observability test using caplog, ensure the system's correctness and tracing functionality.**
-
-## **Implemented Features Summary Table**
-
-| Feature Category | Implementation in Code | Agent/Component Responsible |
-| :--- | :--- | :--- |
-| **Multi-Agent** | Hierarchical Supervisor-Worker pattern | `EducationSupervisor` managing `Curriculum`, `Tutor`, `Quiz` agents. |
-| **Tools** | Built-in & Custom Tools | `TutorAgent` (Google Search), `QuizAgent` (GradeQuizTool). |
-| **Memory** | Session & Long-term persistence | `InMemorySessionService` (Session), `ADKInMemoryMemory` (Long-term). |
-| **Observability** | OpenTelemetry Simulation | `MockTracer` injected into all agents and tools to log spans/events. |
-
-💎 **The multi-agent education system development, encompassing agent implementation, tool integration, supervisor setup, and comprehensive testing with mock ADK components, has been successfully completed.**
+##  https://youtu.be/XZcbYtie_KM
 
 ***
 
 ## 11. Citations
 
+```
 @misc{agents-intensive-capstone-project,
     author = {Addison Howard and Brenda Flynn and Eric Schmidt and Kanchana Patlolla and Kinjal Parekh and María Cruz and Naz Bayrak and Polong Lin and Ray Harvey},
     title = {Agents Intensive - Capstone Project},
@@ -696,6 +697,7 @@ The implemented ADK-based multi-agent education system comprises an EducationSup
     howpublished = {\url{https://kaggle.com/competitions/agents-intensive-capstone-project}},
     note = {Kaggle}
 }
+```
 ***
 
 ## 12. Author and Core Contributor:  
