@@ -14,7 +14,7 @@
     We have built a decentralized, multi-agent ecosystem that delivers truly personalized 1:1 education. Instead of relying on a single, overburdened LLM, our solution utilizes a hierarchical team of specialized agents—orchestrated by a central **EducationSupervisor**—to autonomously manage the entire learning lifecycle.
 
 * **Value: Adaptive & Autonomous Mastery**
-    Our system transforms passive content consumption into an active, adaptive journey. By leveraging specialized roles—planning, teaching, and assessing—our ecosystem ensures that every lesson is dynamically generated, grounded in real-time data, and rigorously evaluated. This architecture provides the scalability of digital platforms with the tailored efficacy of a human tutor.
+    Our system transforms passive content consumption into an active, adaptive journey. By leveraging specialized roles—planning, teaching, and assessing—our ecosystem ensures that every lesson is dynamically generated, grounded in real-time data, and rigorously evaluated. This architecture provides the scalability of digital platforms with the tailored efficacy of a personalized AI tutor.
 
 ***
 ### 2. Core Concept & Value
