@@ -541,6 +541,9 @@ The implemented ADK-based multi-agent education system comprises an EducationSup
 | **Observability** | OpenTelemetry Simulation | `MockTracer` injected into all agents and tools to log spans/events. |
 
 💎 **The multi-agent education system development, encompassing agent implementation, tool integration, supervisor setup, and comprehensive testing with mock ADK components, has been successfully completed.**
+
+<img width="2048" height="2048" alt="unnamed (1)" src="https://github.com/user-attachments/assets/c2f97999-6fe1-49cc-8c6b-e81243c2fe6a" />
+
 ***
 
 ## 6. Effective Use of Gemini:
