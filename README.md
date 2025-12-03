@@ -3,6 +3,8 @@
 ## Education Bliss AI Agent: Autonomous AI Agents for Personalized Learning Mastery
 💡 **Education Bliss AI Agent** is set to revolutionize personalized learning by delivering tailored, adaptive educational experiences that cater to individual student needs and pace, leading to improved knowledge mastery and engagement.
 
+Youtube video URL: **https://youtu.be/buNEMVx68Vw**
+
 <img width="1024" height="1024" alt="Gemini_Generated_Image_3gb0ra3gb0ra3gb0" src="https://github.com/user-attachments/assets/311eb33c-2fab-4076-95b9-94aee57bdec1" />
 
 ### 1. The Pitch (Problem, Solution, Value)
@@ -517,7 +519,10 @@ Refer to the screenshot below confirming that all unit, integration, and observa
 
 ## 5. Bonus points (Tooling, Model Use, Deployment, Video) for "Education Bliss AI Agent"
 
-Youtube video link to demonstrate this is:   
+Youtube video link to demonstrate this in breif is: 
+## https://youtu.be/buNEMVx68Vw
+
+Detailed Youtube video link is below:
 ## https://youtu.be/XZcbYtie_KM
 
 The implemented ADK-based multi-agent education system comprises an EducationSupervisor orchestrating three specialized agents: CurriculumAgent, TutorAgent, and QuizAgent.
@@ -1014,7 +1019,7 @@ Here are three pathways we can explore to detail this deployment, starting with 
 
 ## 10. Youtube Video Submission Link:  
 
-##  https://youtu.be/XZcbYtie_KM
+##  https://youtu.be/buNEMVx68Vw
 
 ***
 
