@@ -1,6 +1,7 @@
 # education-bliss-ai-agent
 
-## Education Bliss AI Agent: a personalized learning multi-agent ecosystem
+## Education Bliss AI Agent: Autonomous AI Agents for Personalized Learning Mastery
+💡 **Education Bliss AI Agent** is set to revolutionize personalized learning by delivering tailored, adaptive educational experiences that cater to individual student needs and pace, leading to improved knowledge mastery and engagement.
 
 <img width="1024" height="1024" alt="Gemini_Generated_Image_3gb0ra3gb0ra3gb0" src="https://github.com/user-attachments/assets/311eb33c-2fab-4076-95b9-94aee57bdec1" />
 
